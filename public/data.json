@@ -1,0 +1,37 @@
+
+[
+  {
+    "id": 1,
+    "title": "超舒服的纯棉T恤",
+    "price": 59.9,
+    "category": "mens clothing",
+    "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    "rating": { "rate": 4.5 }
+  },
+  {
+    "id": 2,
+    "title": "防水双肩包",
+    "price": 129.0,
+    "category": "mens clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": { "rate": 3.9 }
+  },
+  {
+    "id": 3,
+    "title": "女士小金表",
+    "price": 299.0,
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "rating": { "rate": 4.6 }
+  },
+  {
+    "id": 4,
+    "title": "经典男士钱包",
+    "price": 39.9,
+    "category": "mens clothing",
+    "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    "rating": { "rate": 4.1 }
+  }
+]
+
+

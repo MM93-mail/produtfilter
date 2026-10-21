@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>商品过滤器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f7f7f7;
+            color: #333;
+        }
+        h2 { text-align: center; }
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .filters input {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .filters button {
+            padding: 10px 20px;
+            background: #4a90d9;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .filters button:hover { background: #357abd; }
+        .message {
+            margin: 20px 0;
+            font-size: 15px;
+            color: #555;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+        }
+        .card img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .card .info { flex: 1; }
+        .card .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .card .meta {
+            font-size: 13px;
+            color: #888;
+        }
+        .card .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e06c2f;
+        }
+    </style>
+</head>
+<body>
+    <h2>🛍️ 商品过滤器</h2>
+
+    <div class="filters">
+        <input type="number" id="min" placeholder="最低价" />
+        <input type="number" id="max" placeholder="最高价" />
+        <input type="text" id="category" placeholder="分类（如 men's clothing）" />
+        <input type="number" id="rating" step="0.1" placeholder="最低评分" />
+        <button onclick="search()">搜索</button>
+    </div>  
+
+    <div class="message" id="message"></div>
+    <div id="list"></div>
+
+    <script>
+        async function search() {
+            const min = document.getElementById('min').value;
+            const max = document.getElementById('max').value;
+            const category = document.getElementById('category').value;
+            const rating = document.getElementById('rating').value;
+
+            const params = new URLSearchParams();
+            if (min) params.append('min', min);
+            if (max) params.append('max', max);
+            if (category) params.append('category', category);
+            if (rating) params.append('rating', rating);
+
+            try {
+                const res = await fetch('/search?' + params.toString());
+                const data = await res.json();
+
+                document.getElementById('message').textContent = data.message;
+
+                const list = document.getElementById('list');
+                list.innerHTML = data.data.map(item => `
+                    <div class="card">
+                        <img src="${item.image}" alt="">
+                        <div class="info">
+                            <div class="title">${item.title}</div>
+                            <div class="meta">${item.category} · ⭐ ${item.rating.rate}</div>
+                        </div>
+                        <div class="price">$${item.price}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                document.getElementById('message').textContent = '出错了，请稍后再试';
+            }
+        }
+    </script>
+</body>
+</html>
+
