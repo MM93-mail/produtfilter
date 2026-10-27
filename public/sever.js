@@ -1,12 +1,16 @@
 
 
 const express = require('express');
+const cors = require('cors'); // 【新增】解决前后端跨域问题
 const app = express();
-const PORT = 3000;
+// 【修改】云服务器会自动分配端口，不能写死 3000
+const PORT = process.env.PORT || 3000; 
+
+app.use(cors()); // 【新增】允许你的前端跨域请求
+app.use(express.static('public')); // 【新增】如果你把前端文件放在 public 文件夹里，这行能让后端直接返回前端页面
 
 // 引入刚刚建好的本地数据文件
 const products = require('./data.json');
-
 
 app.get('/', (req, res) => {
     res.send('服务器运行成功, 试试加上 /search');
@@ -38,7 +42,6 @@ app.get('/search', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('服务器已启动~');
+    console.log(`服务器已启动~ 正在监听端口: ${PORT}`);
     console.log(`测试地址: http://localhost:${PORT}`);
 });
-
